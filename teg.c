@@ -16,6 +16,7 @@ int openFileVertices() {
 
 void contaArestas() {
 	FILE *in = fopen("grafo.txt", "r");
+	ARESTAS = 0;
 	while(!feof(in)) {
 		if(fgetc(in) == '\n') {
 			ARESTAS++;
@@ -30,11 +31,11 @@ void openFileGrafoAd(int **matriz, int direcionado) {
 	FILE *in = fopen("grafo.txt", "r");
 
 	/* Atribuindo 0 à matriz */
-	for(i = 0; i < VERTICES; i++) {
+	/*for(i = 0; i < VERTICES; i++) {
 		for (j = 0; j < VERTICES; j++) {
 			matriz[i][j] = 0;
 		}
-	}
+	}*/
 
 	/* Atribuindo o número de arestas aos vértices correspondentes */
 	while(fscanf(in, "%i %i %i #", &vertice1, &vertice2, &relacionamento) != EOF) {
@@ -109,7 +110,7 @@ void excluiVerticeAd(int no) {
 
 int **alocaMatriz(int linhas, int colunas) {
 	int i;
-	int **matriz = (int **) calloc(linhas, sizeof(int)); // LINHAS
+	int **matriz = (int **) calloc(linhas, sizeof(int*)); // LINHAS
 			for(i = 0; i < VERTICES; i++) {
 				matriz[i] = (int *) calloc(colunas, sizeof(int)); // COLUNAS
 	}
@@ -119,6 +120,7 @@ int **alocaMatriz(int linhas, int colunas) {
 int **liberaMatriz(int **matriz) {
 	int i;
 	for(i = 0; i < VERTICES; i++) {
+		matriz[i] = NULL;
 		free(matriz[i]);
 	}
 	free(matriz);
@@ -127,6 +129,7 @@ int **liberaMatriz(int **matriz) {
 
 int main(void) {	
 	VERTICES = openFileVertices();
+	printf("VERTICES = %d\n", VERTICES);
 	contaArestas();
 	int menu;
 	int **matriz;
@@ -164,11 +167,13 @@ int main(void) {
 					int no;
 					printf("Qual vertice deseja excluir?\n");
 					scanf("%i", &no);
-					printf("exclui");
+					printf("exclui\n");
 					excluiVerticeAd(no);
-					printf("LIBERA");
+					printf("LIBERA\n");
 					matriz = liberaMatriz(matriz);
-					printf("aloca");
+					printf("aloca\n");
+					VERTICES = openFileVertices();
+					contaArestas();
 					matriz = alocaMatriz(VERTICES, VERTICES);
 					openFileGrafoAd(matriz, d);
 					mostrarMatrizAd(matriz);
