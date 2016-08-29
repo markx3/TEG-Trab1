@@ -3,7 +3,7 @@
 #include "grafo.h"
 
 int main(void) {	
-	VERTICES = openFileVertices();
+	VERTICES = contaVertices();
 	printf("VERTICES = %d\n", VERTICES);
 	contaArestas();
 	int menu;
@@ -34,40 +34,9 @@ int main(void) {
 			} while(d != 2 && d != 1);
 			
 			
-			int exclusao;
-			printf("Deseja excluir um vertice?\n 1. Sim; 2. Não\n");
-			do {
-				scanf("%i", &exclusao);
-				if(exclusao == 1) {
-					int no;
-					printf("Qual vertice deseja excluir?\n");
-					scanf("%i", &no);
-					printf("exclui\n");
-					excluiVerticeAd(no);
-					printf("LIBERA\n");
-					matriz = liberaMatriz(matriz);
-					printf("aloca\n");
-					VERTICES = openFileVertices();
-					contaArestas();
-					matriz = alocaMatriz(VERTICES, VERTICES);
-					openFileGrafoAd(matriz, d);
-					mostrarMatrizAd(matriz);
-				} else if (exclusao == 2) {
-					break;
-				} else {
-					printf("Invalido.\n");
-				}		
+			exclusaoAd(matriz, d);
 			
-			} while(exclusao != 1 && exclusao != 2);
-			
-			int insercao;
-			printf("Deseja inserir um vertice?\n1. Sim; 2. Não\n");
-			do {
-				scanf("%i", &insercao);
-				if(insercao == 1) {
-					insereNoAd();
-				} 
-			} while (insercao != 1 && insercao != 2);
+			insercaoAd(matriz, d);
 			
 			
 			break;
@@ -75,11 +44,22 @@ int main(void) {
 		case 2:
 		
 			/* Alocando a matriz */
+			contaArestas();
+			VERTICES = contaVertices();
 			matriz = alocaMatriz(ARESTAS, VERTICES);
 
-			openFileGrafoId(matriz);
+			printf("ARESTAS = %d\n", ARESTAS);
+			d = 0;
+			printf("1. Direcionado; 2. Não direcionado\n");
+			scanf("%d", &d);
+			openFileGrafoId(matriz, d);
+			mostrarMatrizId(matriz);
+			exclusaoId(matriz, d);
+			insercaoId(matriz, d);
 			break;
 			
+
+
 		default:
 			printf("Opção inválida. Encerrando...\n");
 	}
