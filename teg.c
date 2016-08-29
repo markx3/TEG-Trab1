@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include "grafo.h"
 
-
-
-
-
 int main(void) {	
 	VERTICES = openFileVertices();
 	printf("VERTICES = %d\n", VERTICES);
@@ -64,6 +60,14 @@ int main(void) {
 			
 			} while(exclusao != 1 && exclusao != 2);
 			
+			int insercao;
+			printf("Deseja inserir um vertice?\n1. Sim; 2. Não\n");
+			do {
+				scanf("%i", &insercao);
+				if(insercao == 1) {
+					insereNoAd();
+				} 
+			} while (insercao != 1 && insercao != 2);
 			
 			
 			break;

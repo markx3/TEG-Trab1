@@ -3,12 +3,15 @@
 #include <stdlib.h>
 
 int openFileVertices() {
-	int tam;
-	/* Lendo o tamanho de vértices do grafo */
-	FILE *in = fopen("vertices.txt", "r");
-	while(fscanf(in, "%i", &tam) != EOF) {
-			return tam;
+	int tam = 0;
+
+	int v1, v2, nr;
+	FILE *in = fopen("grafo.txt", "r");
+	while(fscanf(in, "%d %d %d", &v1, &v2, &nr) != EOF) {
+		if (v1 > tam) tam = v1;
+		if (v2 > tam) tam = v2;
 	}
+	fclose(in);
 	return tam;
 }
 
@@ -94,20 +97,18 @@ void excluiVerticeAd(int no) {
 	int v1, v2, r;
 	FILE *in = fopen("grafo.txt", "r");
 	FILE *out = fopen("saida.txt", "w");
-	FILE *vert = fopen("vertices.txt", "w");
+	VERTICES--;
 	while(fscanf(in, "%i %i %i #", &v1, &v2, &r) != EOF) {
 		if(v1 != no && v2 != no) {
-			if (v1 != 1 && v2 != 1) fprintf(out, "%i %i %i\n", --v1, --v2, r);
-			else fprintf(out, "%i %i %i\n", v1, v2, r);						// ALTEREI AQUI
-		}		
+			if (v1 > no) v1--;
+			if (v2 > no) v2--;
+			fprintf(out, "%i %i %i\n", v1, v2, r);
+		}
 	}	
 	remove("grafo.txt");
 	rename("saida.txt", "grafo.txt");	
 	fclose(in);
 	fclose(out);
-	VERTICES--;
-	fprintf(vert, "%i", VERTICES);
-	fclose(vert);
 }
 
 int **alocaMatriz(int linhas, int colunas) {
@@ -127,4 +128,23 @@ int **liberaMatriz(int **matriz) {
 	}
 	free(matriz);
 	return NULL;
+}
+
+void insereNoAd() {
+	char buf[100];
+	int or = 0, dest = 0, nrel = 0, flag = 1;
+	FILE *fp = fopen("grafo.txt", "a");
+	int i = 0;
+	printf("Insira o nó e suas relações (da mesma forma que do arquivo grafo.txt)\nEntre com 0 para encerrar a entrada.\n");
+	while (flag != 0) {
+		scanf("%d %d %d", &or, &dest, &nrel);
+		fprintf(fp, "%d %d %d\n", or, dest, nrel);
+		printf("Deseja inserir outra relação?\n");
+		scanf("%d", &flag);
+	} 
+	FILE *vert = fopen("vertices.txt", "w");
+	VERTICES++;
+	fprintf(vert, "%d", VERTICES);
+	fclose(vert);
+	fclose(fp);
 }
