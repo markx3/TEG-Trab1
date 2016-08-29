@@ -8,6 +8,7 @@ int main(void) {
 	contaArestas();
 	int menu;
 	int **matriz;
+
 	printf("1. Adjacencia; 2. Incidência\n");
 	scanf("%i", &menu);
 	
@@ -33,7 +34,14 @@ int main(void) {
 				}
 			} while(d != 2 && d != 1);
 			
-			
+			int i;
+
+			printf("\n");
+			for (i = 0; i < VERTICES; i++) {
+				printf("Grau do vértice %i = %i\n", i+1, calculaGrau(i, matriz));
+			}
+			printf("\n");
+
 			exclusaoAd(matriz, d);
 			
 			insercaoAd(matriz, d);
