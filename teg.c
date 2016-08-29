@@ -28,6 +28,8 @@ int main(void) {
 					printf("TAMANHO: %i\n", VERTICES);
 					
 					mostrarMatrizAd(matriz);
+					printf("\nMatriz Adj. do Complemento de G:\n");
+					if (d == 2) matrAdjComplemento(matriz);
 					
 				} else {
 					printf("Invalido.\n");

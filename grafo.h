@@ -27,6 +27,6 @@ void exclusaoAd(int **matriz, int d);
 void insercaoAd(int **matriz, int d);
 void exclusaoId(int **matriz, int d);
 void insercaoId(int **matriz, int d);
-
+void matrAdjComplemento(int **matriz);
 
 #endif

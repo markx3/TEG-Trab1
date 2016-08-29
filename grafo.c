@@ -151,6 +151,20 @@ void insereNoAd() {
 	fclose(fp);
 }
 
+void matrAdjComplemento(int **matriz) {
+	int i, j;
+	VERTICES = contaVertices();
+	for (i = 0; i < VERTICES; i++) {
+		for (j = 0; j < VERTICES; j++) {
+			if (i != j) {
+				if (matriz[i][j] == 0) printf("1 ");
+				else printf("0 ");
+			} else printf("0 ");
+		}
+		printf("\n");
+	}
+}
+
 void exclusaoAd(int **matriz, int d) {
 	int exclusao;
 			printf("Deseja excluir um vertice?\n 1. Sim; 2. Não\n");
